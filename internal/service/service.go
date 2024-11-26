@@ -1,21 +1,32 @@
 package service
 
 import (
+	"context"
+	"fmt"
 	"github.com/Solwery-Veronika/gateway/internal/model"
+	"github.com/Solwery-Veronika/gateway/pkg/auth"
 )
 
 type Service struct {
-	repo Repo
+	repo       Repo
+	authClient AuthClientI
 }
 
-func New(rep Repo) *Service {
+func New(rep Repo, aC AuthClientI) *Service {
 	return &Service{
-		repo: rep,
+		repo:       rep,
+		authClient: aC,
 	}
 }
 
-func (s *Service) Summator(data *model.Data) {
-	data.Sum = data.A + data.B
+func (s *Service) SignupUsecase(ctx context.Context, data model.SignupData) (*auth.LoginOut, error) {
+	if data.Password != data.RetryPassword {
+		return nil, fmt.Errorf("password is incorrect")
+	}
 
-	s.repo.Save(data.Sum)
+	resp, err := s.authClient.Login(ctx, data)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
