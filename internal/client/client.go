@@ -2,10 +2,11 @@ package client
 
 import (
 	"context"
+	"log"
+
 	"github.com/Solwery-Veronika/gateway/internal/model"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"log"
 
 	"github.com/Solwery-Veronika/gateway/pkg/auth"
 )
@@ -24,9 +25,14 @@ func New() *Client {
 	return &Client{client: grpcClient}
 }
 
-func (c *Client) Login(ctx context.Context, data model.SignupData) (*auth.LoginOut, error) {
-	return c.client.Login(ctx, &auth.LoginIn{
+func (c *Client) Signup(ctx context.Context, data model.SignupData) (*auth.SignupResponse, error) {
+	return c.client.Signup(ctx, &auth.SignupRequest{
 		Username: data.Username,
 		Password: data.Password,
 	})
+}
+
+// Login implements service.AuthClientI.
+func (c *Client) Login(ctx context.Context, data model.SignupData) (*auth.LoginOut, error) {
+	panic("unimplemented")
 }
