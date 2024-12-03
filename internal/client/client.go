@@ -4,11 +4,10 @@ import (
 	"context"
 	"log"
 
+	"github.com/Solwery-Veronika/auth/pkg/auth"
 	"github.com/Solwery-Veronika/gateway/internal/model"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-
-	"github.com/Solwery-Veronika/gateway/pkg/auth"
 )
 
 type Client struct {
@@ -32,7 +31,9 @@ func (c *Client) Signup(ctx context.Context, data model.SignupData) (*auth.Signu
 	})
 }
 
-// Login implements service.AuthClientI.
-func (c *Client) Login(ctx context.Context, data model.SignupData) (*auth.LoginOut, error) {
-	panic("unimplemented")
+func (c *Client) Login(ctx context.Context, data model.LoginData) (*auth.LoginOut, error) {
+	return c.client.Login(ctx, &auth.LoginIn{
+		Username: data.Username,
+		Password: data.Password,
+	})
 }

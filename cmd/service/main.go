@@ -37,6 +37,7 @@ func main() {
 	// fmt.Println(out)
 
 	http.HandleFunc("/signup", handler.Signup)
+	http.HandleFunc("/login", handler.Login)
 
 	// fmt.Println(res)
 
