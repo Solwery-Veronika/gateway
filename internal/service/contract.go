@@ -2,8 +2,9 @@ package service
 
 import (
 	"context"
+
+	"github.com/Solwery-Veronika/auth/pkg/auth"
 	"github.com/Solwery-Veronika/gateway/internal/model"
-	"github.com/Solwery-Veronika/gateway/pkg/auth"
 )
 
 type Repo interface {
@@ -11,5 +12,6 @@ type Repo interface {
 }
 
 type AuthClientI interface {
-	Login(ctx context.Context, data model.SignupData) (*auth.LoginOut, error)
+	Signup(ctx context.Context, data model.SignupData) (*auth.SignupResponse, error)
+	Login(ctx context.Context, data model.LoginData) (*auth.LoginOut, error)
 }

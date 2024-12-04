@@ -1,11 +1,12 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/Solwery-Veronika/gateway/internal/api"
 	"github.com/Solwery-Veronika/gateway/internal/client"
 	"github.com/Solwery-Veronika/gateway/internal/repository"
 	"github.com/Solwery-Veronika/gateway/internal/service"
-	"net/http"
 )
 
 // компилируемые (go, c, c++, java)
@@ -33,9 +34,10 @@ func main() {
 	//	log.Fatalf("error response: %v", err)
 	//}
 
-	//fmt.Println(out)
+	// fmt.Println(out)
 
 	http.HandleFunc("/signup", handler.Signup)
+	http.HandleFunc("/login", handler.Login)
 
 	// fmt.Println(res)
 
