@@ -8,6 +8,6 @@ import (
 )
 
 type SrvI interface {
-	SignupUsecase(ctx context.Context, data model.SignupData) (*auth.SignupResponse, error)
+	SignupUsecase(ctx context.Context, data model.SignupData) (*model.SignupOut, error)
 	LoginUsecase(ctx context.Context, data model.LoginData) (*auth.LoginOut, error)
 }

@@ -10,3 +10,7 @@ type LoginData struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
 }
+
+type SignupOut struct {
+	Success bool `json:"success"`
+}
