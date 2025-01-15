@@ -22,24 +22,8 @@ func main() {
 
 	handler := api.New(srv)
 
-	//ctx, cancel := context.WithTimeout(context.Background(), time.Second) // контроль времени выполнения запроса
-	//
-	//defer cancel()
-
-	//out, err := c.Login(ctx, &auth.LoginIn{
-	//	Username: "Privet",
-	//	Password: "1234",
-	//})
-	//if err != nil {
-	//	log.Fatalf("error response: %v", err)
-	//}
-
-	// fmt.Println(out)
-
 	http.HandleFunc("/signup", handler.Signup)
 	http.HandleFunc("/login", handler.Login)
-
-	// fmt.Println(res)
 
 	err := http.ListenAndServe(":3232", nil)
 	if err != nil {

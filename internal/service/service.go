@@ -20,7 +20,7 @@ func New(rep Repo, aC AuthClientI) *Service {
 	}
 }
 
-func (s *Service) SignupUsecase(ctx context.Context, data model.SignupData) (*auth.SignupResponse, error) {
+func (s *Service) SignupUsecase(ctx context.Context, data model.SignupData) (*model.SignupOut, error) {
 	if data.Password != data.RetryPassword {
 		return nil, fmt.Errorf("password is incorrect")
 	}
@@ -29,7 +29,9 @@ func (s *Service) SignupUsecase(ctx context.Context, data model.SignupData) (*au
 	if err != nil {
 		return nil, err
 	}
-	return resp, nil
+	out := &model.SignupOut{}
+	out.Success = resp.Success
+	return out, nil
 }
 
 func (s *Service) LoginUsecase(ctx context.Context, data model.LoginData) (*auth.LoginOut, error) {
