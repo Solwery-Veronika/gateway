@@ -2,58 +2,73 @@ package api
 
 import (
 	"encoding/json"
-	"github.com/Solwery-Veronika/gateway/internal/model"
 	"io"
+	"log"
 	"net/http"
+
+	"github.com/Solwery-Veronika/gateway/internal/model"
 )
 
 type Handler struct {
 	authService SrvI
 }
 
-func New(aS SrvI) *Handler { //конструктор
+func New(aS SrvI) *Handler { // конструктор
 	return &Handler{
 		authService: aS,
 	}
 }
 
 func (h *Handler) Signup(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
+	if r.Method != http.MethodPost { // если запрос идет не по методы отправки
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
 	}
 
-	jsn, err := io.ReadAll(r.Body)
+	// конвертируем в массив байтов
+
+	jsn, err := io.ReadAll(r.Body) // считываение байтов из тела запроса
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte(err.Error()))
+		if _, writeErr := w.Write([]byte(err.Error())); writeErr != nil {
+			log.Printf("failed to write error response: %v", writeErr)
+		} // сообщение об ошибке
 		return
 	}
+
+	// преобразовываем массив байтов в структуру
 
 	var data model.SignupData
-	err = json.Unmarshal(jsn, &data)
+	err = json.Unmarshal(jsn, &data) // превращение байтов в структуру(jsn-массив байтов, data-куда записать)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte(err.Error()))
+		if _, writeErr := w.Write([]byte(err.Error())); writeErr != nil {
+			log.Printf("failed to write error response: %v", writeErr)
+		}
 		return
 	}
 
-	res, err := h.authService.SignupUsecase(r.Context(), data)
+	res, err := h.authService.SignupUsecase(r.Context(), data) // запускает процесс регистрации пользователя в сервисе аутентификации
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(err.Error()))
+		if _, writeErr := w.Write([]byte(err.Error())); writeErr != nil {
+			log.Printf("failed to write error response: %v", writeErr)
+		}
 		return
 	}
 
 	jsnBytes, err := json.Marshal(res)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(err.Error()))
+		if _, writeErr := w.Write([]byte(err.Error())); writeErr != nil {
+			log.Printf("failed to write error response: %v", writeErr)
+		}
 		return
 	}
-
 	w.WriteHeader(http.StatusOK)
-	w.Write(jsnBytes)
+	if _, err := w.Write(jsnBytes); err != nil {
+		log.Printf("failed to write response: %v", err)
+	}
 }
 
 func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
@@ -65,7 +80,9 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	jsn, err := io.ReadAll(r.Body)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte(err.Error()))
+		if _, writeErr := w.Write([]byte(err.Error())); writeErr != nil {
+			log.Printf("failed to write error response: %v", writeErr)
+		}
 		return
 	}
 
@@ -73,24 +90,32 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	err = json.Unmarshal(jsn, &data)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte(err.Error()))
+		if _, writeErr := w.Write([]byte(err.Error())); writeErr != nil {
+			log.Printf("failed to write error response: %v", writeErr)
+		}
 		return
 	}
 
 	res, err := h.authService.LoginUsecase(r.Context(), data)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(err.Error()))
+		if _, writeErr := w.Write([]byte(err.Error())); writeErr != nil {
+			log.Printf("failed to write error response: %v", writeErr)
+		}
 		return
 	}
 
 	jsnBytes, err := json.Marshal(res)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(err.Error()))
+		if _, writeErr := w.Write([]byte(err.Error())); writeErr != nil {
+			log.Printf("failed to write error response: %v", writeErr)
+		}
 		return
 	}
 
 	w.WriteHeader(http.StatusOK)
-	w.Write(jsnBytes)
+	if _, err := w.Write(jsnBytes); err != nil {
+		log.Printf("failed to write response: %v", err)
+	}
 }
