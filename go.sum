@@ -2,6 +2,8 @@ github.com/Solwery-Veronika/auth v0.0.0-20241120085013-87bec446f358 h1:P5ex1GDzl
 github.com/Solwery-Veronika/auth v0.0.0-20241120085013-87bec446f358/go.mod h1:fUbOSOrNEfVD5egBImMxR5Hzo8DyTLqce1cv0roZWD0=
 github.com/Solwery-Veronika/auth v0.0.1 h1:XjJuZCZN9lpAy1MbkOuAM1EfeJef9s8/ppOwhIsprrs=
 github.com/Solwery-Veronika/auth v0.0.1/go.mod h1:fUbOSOrNEfVD5egBImMxR5Hzo8DyTLqce1cv0roZWD0=
+github.com/Solwery-Veronika/auth v0.0.2 h1:Roj0C1LauGP0ucd+7yjPQ6mU28iPUnTMjCpvjuNyAg0=
+github.com/Solwery-Veronika/auth v0.0.2/go.mod h1:2J2FTMcPpW3k8y2rnxM3Ka4aPXhAFq4r8t6Lv2bti5o=
 github.com/golang/protobuf v1.5.4 h1:i7eJL8qZTpSEXOPTxNKhASYpMn+8e5Q6AdndVa1dWek=
 github.com/golang/protobuf v1.5.4/go.mod h1:lnTiLA8Wa4RWRcIUkrtSVa5nRhsEGBg48fD6rSs7xps=
 github.com/google/go-cmp v0.6.0 h1:ofyhxvXcZhMsU5ulbFiLKl/XBFqE1GSq7atu8tAmTRI=
