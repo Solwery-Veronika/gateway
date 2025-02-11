@@ -5,6 +5,7 @@ import (
 
 	"github.com/Solwery-Veronika/gateway/internal/api"
 	"github.com/Solwery-Veronika/gateway/internal/client"
+	"github.com/Solwery-Veronika/gateway/internal/config"
 	"github.com/Solwery-Veronika/gateway/internal/repository"
 	"github.com/Solwery-Veronika/gateway/internal/service"
 )
@@ -13,10 +14,11 @@ import (
 // интерпритируемые (python, js)
 
 func main() {
+	cfg := config.MustLoad()
 	repo := repository.New()
 
 	// клиент
-	c := client.New()
+	c := client.New(cfg)
 
 	srv := service.New(repo, c)
 
@@ -25,7 +27,7 @@ func main() {
 	http.HandleFunc("/signup", handler.Signup)
 	http.HandleFunc("/login", handler.Login)
 
-	err := http.ListenAndServe(":3232", nil)
+	err := http.ListenAndServe(cfg.Service.Port, nil)
 	if err != nil {
 		panic(err)
 	}
