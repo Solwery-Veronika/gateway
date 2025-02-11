@@ -47,7 +47,7 @@ func (h *Handler) Signup(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-
+	log.Println("signup work")
 	res, err := h.authService.SignupUsecase(r.Context(), data) // запускает процесс регистрации пользователя в сервисе аутентификации
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
