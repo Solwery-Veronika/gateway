@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"fmt"
 	"log"
 
 	"github.com/Solwery-Veronika/auth/pkg/auth"
@@ -17,7 +18,7 @@ type Client struct {
 }
 
 func New(cfg *config.Config) *Client {
-	conn, err := grpc.NewClient(cfg.Client.Port, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient(fmt.Sprintf("%s:%s", cfg.Client.Host, cfg.Client.Port), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}

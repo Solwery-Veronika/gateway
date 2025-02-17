@@ -16,6 +16,7 @@ type Service struct {
 }
 type Client struct {
 	Port string `env:"GATEWAY_CLIENT_PORT"`
+	Host string `env:"GATEWAY_CLIENT_HOST"`
 }
 
 func MustLoad() *Config {

@@ -27,7 +27,7 @@ func main() {
 	http.HandleFunc("/signup", handler.Signup)
 	http.HandleFunc("/login", handler.Login)
 
-	err := http.ListenAndServe(cfg.Service.Port, nil)
+	err := http.ListenAndServe(":"+cfg.Service.Port, nil)
 	if err != nil {
 		panic(err)
 	}
